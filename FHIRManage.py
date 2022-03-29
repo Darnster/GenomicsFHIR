@@ -19,6 +19,7 @@ To Do:
 2.a. Decide how to handle booleans
 3. Add config file
 4. Add get functionality
+Test
 """
 
 
