@@ -54,7 +54,7 @@ ID snippets that reference the IDs to be used during testing.  The snippets are 
   
 In the code the references are assigned to variables referenced from the dictionary within the Python code, as shown below:
   
-.....},
+....},
             # Patient
             "subject": self.patientRef,
             "authoredOn": "2022-03-30T15:00:00-07:00",
@@ -62,7 +62,7 @@ In the code the references are assigned to variables referenced from the diction
             "requester": self.practitionerRef,
             # Specimen
             "specimen": self.specimenRef
-        }...
+        }....
 """
 
 # used to map Resources to to class methods
