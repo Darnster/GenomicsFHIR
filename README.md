@@ -5,9 +5,11 @@ What this code does:
 2. Returns the server id for each FHIR resource created or updated and logs it
 
 To Do:
+
 1. Add commandline parameters/args to allow the code to be run from the command line.  Currently the code is run by editing the __main__ method directly.
  
 Guidance:
+
 This software has been created to build up a set of resource dependencies/references to support testing of complex pathology/genomics scenarios.
 Resources such as the pathology ServiceRequest include references to Patient, Specimen, Practitioner, etc which in return may have references to other Resources such as
 Organization and Location Resources, etc.
