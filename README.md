@@ -54,4 +54,3 @@ In the code the references are assigned to variables referenced from the diction
             # Specimen
             "specimen": self.specimenRef
         }...
-"""
