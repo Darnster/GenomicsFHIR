@@ -3,8 +3,8 @@ Practitioner:C:\\Users\\Danny\\PycharmProjects\\Genomics\\inputs\\Practitioner.j
 Specimen:C:\\Users\\Danny\\PycharmProjects\\Genomics\\inputs\\Specimen.json
 Organization:C:\\Users\\Danny\\PycharmProjects\\Genomics\\inputs\\Organization.json
 BaseURL: http://hapi.fhir.org/baseR4
-patientRef:{"reference": "Patient/2865853"}
+patientRef:{"reference": "Patient/2866353"}
 practitionerRef:{"reference": "Practitioner/2865856"}
 specimenRef:{"reference": "Specimen/2865855"}
 manOrgRef:{"reference": "Organization/444"}
-ignore:https://server.fire.ly
+__BaseURL:https://server.fire.ly
