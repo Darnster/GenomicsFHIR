@@ -23,11 +23,16 @@ Test
 """
 
 
-def CreateSR():
+def Create(Resource):
+    ResourceDict = {"ServiceRequest" : "SRPayload",
+                    "Patient" : "PatientPayload",
+                    "Specimen" : "SpecimenPayload",
+                    "Practitioner" : "PractitionerPayload"}
+
     Fres = FHIRCreate()
-    ResourceToCreate = "ServiceRequest"
+    ResourceToCreate = Resource
     cp = Fres.readConfig("C:\\Users\\Danny\\PycharmProjects\\Genomics\\SRconfig.txt")
-    Response = Fres.run("SRPayload")
+    Response = Fres.run(ResourceDict[Resource])
     ResDict = json.loads(Response)
     id = ResDict["id"]  # resource ID on the server
 
@@ -35,21 +40,6 @@ def CreateSR():
     Fget = FHIRGet()
     Response = Fget.getResource(cp["BaseURL"], ResourceToCreate, id)
     FHIRlog = WriteLog().log("GET response %s: %s\n" % (ResourceToCreate, id))
-
-
-def CreatePatient():
-    Fres = FHIRCreate()
-    ResourceToCreate = "Patient"
-    cp = Fres.readConfig("C:\\Users\\Danny\\PycharmProjects\\Genomics\\SRconfig.txt")
-    Response = Fres.run("PatientPayload")
-    ResDict = json.loads(Response)
-    id = ResDict["id"]  # resource ID on the server
-
-    # now retrieve the content
-    Fget = FHIRGet()
-    Response = Fget.getResource(cp["BaseURL"], ResourceToCreate, id)
-    FHIRlog = WriteLog().log("GET response %s: %s\n" % (ResourceToCreate, id))
-
 
 
 class WriteLog(object):
@@ -76,28 +66,42 @@ class FHIRCreate(object):
         :param config: string - full path to config file with FHIR resources listed
         :return: None
         """
-
         cp = cfg_parser.config_parser()
         self.configDict = cp.read(config)
+
+        self.baseURL = self.configDict.setdefault("BaseURL", "no baseURL")
 
         # get source json for each resource when creating
         self.patient = self.configDict.setdefault("Patient",{})
         self.patient = self.openFile(self.patient)
+
         self.practitioner = self.configDict.setdefault("Practitioner",{})
         self.practitioner = self.openFile(self.practitioner)
+
         self.specimen = self.configDict.setdefault("Specimen",{})
         self.specimen = self.openFile(self.specimen)
+
         self.organization = self.configDict.setdefault("Organization",{})
         self.organization = self.openFile(self.organization)
-        self.baseURL = self.configDict.setdefault("BaseURL","no baseURL")
+
 
         # get id/refs for dependent resources
-        self.patientRef = self.configDict.setdefault("patientRef",{})
-        self.patientRef = self.openFile(self.patientRef)
+        self.patientRef = self.configDict.setdefault("patientRef","")
+        self.patientRef = eval(self.patientRef)
 
-        print(self.patientRef)
+        self.practitionerRef = self.configDict.setdefault("practitionerRef", "")
+        self.practitionerRef = eval(self.practitionerRef)
+
+        self.specimenRef = self.configDict.setdefault("specimenRef", "")
+        self.specimenRef = eval(self.specimenRef)
+
+        self.manOrgRef = self.configDict.setdefault("manOrgRef", "")
+        self.manOrgRef = eval(self.manOrgRef)
+
+        # add other dependencies here
 
         return self.configDict
+
 
     def openFile(self, file):
         if file != {}:
@@ -126,11 +130,15 @@ class FHIRCreate(object):
             resToCall = config[0]
             payload = config[1]
         elif resource == "ManageOrgPayload":
-            config = self.manageOrgPayload()
+            config = self.ManageOrgPayload()
             resToCall = config[0]
             payload = config[1]
         elif resource == "PractitionerPayload":
             config = self.PractitionerPayload()
+            resToCall = config[0]
+            payload = config[1]
+        elif resource == "SpecimenPayload":
+            config = self.SpecimenPayload()
             resToCall = config[0]
             payload = config[1]
 
@@ -160,9 +168,14 @@ class FHIRCreate(object):
 
         return ["Practitioner", json.dumps(self.practitioner)]
 
-    def manageOrgPayload(self):
+    def ManageOrgPayload(self):
 
         return ["Organization", json.dumps(self.organization)]
+
+    def SpecimenPayload(self):
+
+        return ["Specimen", json.dumps(self.specimen)]
+
 
     def SRPayload(self):
         return ["ServiceRequest", json.dumps({
@@ -188,9 +201,9 @@ class FHIRCreate(object):
             "subject": self.patientRef,
             #"authoredOn": "2016-10-10T15:00:00-07:00",
             # Practitioner
-            #"requester": self.practitionerRef,
+            "requester": self.practitionerRef,
             # Specimen
-            #"specimen": self.specimenRef
+            "specimen": self.specimenRef
         })
         ]
 
@@ -216,9 +229,7 @@ def __init__(self):
     pass
 
 if __name__ == "__main__":
-    CreateSR()
-
-    # manageOrgPayload
-    # PractPayload
-    # SRPayload
-    # SpecimenPayload - to do
+    Create("ServiceRequest")
+    #CreatePatient()
+    #CreateSpecimen()
+    #CreatePractitioner()
