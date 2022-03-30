@@ -34,7 +34,7 @@ The IDs need to be maintained in order to support repeatability of tests with di
 themselves, e.g.
 
   {"resourceType": "Patient",
-  "id": "2866353", ....}
+  "id": "2866353", .....}
 
 If new Resources are identified which the software doesn't support is is straightforward to add them to the code and map them into the processing.
 
