@@ -2,9 +2,13 @@ Patient:C:\\Users\\Danny\\PycharmProjects\\Genomics\\inputs\\Patient.json
 Practitioner:C:\\Users\\Danny\\PycharmProjects\\Genomics\\inputs\\Practitioner.json
 Specimen:C:\\Users\\Danny\\PycharmProjects\\Genomics\\inputs\\Specimen.json
 Organization:C:\\Users\\Danny\\PycharmProjects\\Genomics\\inputs\\Organization.json
+RequestOrganization:C:\\Users\\Danny\\PycharmProjects\\Genomics\\inputs\\RequestOrganization.json
 BaseURL: http://hapi.fhir.org/baseR4
 patientRef:{"reference": "Patient/2866353"}
 practitionerRef:{"reference": "Practitioner/2865856"}
 specimenRef:{"reference": "Specimen/2865855"}
-manOrgRef:{"reference": "Organization/444"}
+manOrgRef:{"reference": "Organization/2845096"}
+reqOrgRef:{"reference": "Organization/2875472"}
+__not_used__SRRef: ("reference" : "ServiceRequest/2875478")
+__BaseURL:https://simplifier.net/validate?scope=hl7.fhir.r4.core@4.0.1
 __BaseURL:https://server.fire.ly

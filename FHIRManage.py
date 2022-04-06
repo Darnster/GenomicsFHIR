@@ -6,15 +6,19 @@ from datetime import datetime
 """
 
 version: 0.1
-Date: 30-3-2022
+Date: 06-04-2022
 Author:  Danny Ruttle
 
 What this code does:
 1. Creates and updates FHIR resources
 2. Returns the server id for each FHIR resource created or updated and logs it
 
+ChangeLog:
+06-04-2022 - added capability to support Create/Update of Requesting Organization
+
 To Do:
 1. Add commandline parameters/args to allow the code to be run from the command line.  Currently the code is run by editing the __main__ method directly.
+2. Fix bug for GET request within RestingOrganization Creation
  
 Guidance:
 This software has been created to build up a set of resource dependencies/references to support testing of complex pathology/genomics scenarios.
@@ -70,7 +74,8 @@ ResourceDict = {"ServiceRequest" : "SRPayload",
                     "Patient" : "PatientPayload",
                     "Specimen" : "SpecimenPayload",
                     "Practitioner" : "PractitionerPayload",
-                    "ReqOrganization" : "ReqOrgPayload" }
+                    "Organization" : "ManOrgPayload",
+                    "ReqOrganization" : "ReqOrgPayload"}
 
 def Create(Resource):
     Fres = FHIRManage()
@@ -200,8 +205,8 @@ class FHIRManage(object):
             config = self.PatientPayload()
             resToCall = config[0]
             payload = config[1]
-        elif resource == "ManageOrgPayload":
-            config = self.ManageOrgPayload()
+        elif resource == "ManOrgPayload":
+            config = self.ManOrgPayload()
             resToCall = config[0]
             payload = config[1]
         elif resource == "ReqOrgPayload":
@@ -258,7 +263,7 @@ class FHIRManage(object):
 
         return ["Practitioner", json.dumps(self.practitioner)]
 
-    def ManageOrgPayload(self):
+    def ManOrgPayload(self):
 
         return ["Organization", json.dumps(self.organization)]
 
@@ -295,11 +300,11 @@ class FHIRManage(object):
                     "coding": [
                         {
                             "system": "http://snomed.info/sct",
-                            "code": "76164006",
+                            "code": "76164116",
                             "display": "Biopsy of colon (procedure)"
                         }
                     ],
-                    "text": "Biopsy of colon"
+                    "text": "Gene Mutation Analysis"
                 },
             # Patient
             "subject": self.patientRef,
