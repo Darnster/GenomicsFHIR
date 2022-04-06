@@ -1,0 +1,22 @@
+{
+    "resourceType": "ServiceRequest",
+    "id": "9b79fd8c-2955-453f-8007-f8b1c7b9596d",
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: example-pgx</p><p><b>status</b>: active</p><p><b>intent</b>: original-order</p><p><b>code</b>: CYP2D6 gene targeted mutation analysis <span>(Details : {LOINC code '47403-1' = 'CYP2D6 gene mutation analysis in Blood or Tissue by Molecular genetics method Narrative', given as 'CYP2D6 gene targeted mutation analysis'})</span></p><p><b>subject</b>: <a>Patient/899962</a></p><p><b>authoredOn</b>: 10/10/2016 3:00:00 PM</p><p><b>requester</b>: <a>Practitioner/12345</a></p></div>"
+    },
+    "status": "active",
+    "priority": "routine",
+     "intent": "order",
+  "code": {
+    "coding": [
+      {
+        "system": "http://snomed.info/sct",
+        "code": "76164006",
+        "display": "Biopsy of colon (procedure)"
+      }
+    ],
+    "text": "Biopsy of colon"
+  },
+     # Patient
+}
