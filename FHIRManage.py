@@ -5,7 +5,7 @@ from datetime import datetime
 
 """
 
-version: 0.1
+version: 0.2
 Date: 06-04-2022
 Author:  Danny Ruttle
 
