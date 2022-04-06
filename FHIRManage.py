@@ -165,7 +165,11 @@ class FHIRManage(object):
     def openFile(self, file):
         if file != {}:
             f = open(file, "r")
-            outFile = json.load(f)
+            try:
+                outFile = json.load(f)
+            except json.decoder.JSONDecodeError:
+                print("\nInvalid json in file: %s" % file)
+                sys.exit()
             return outFile
 
 
@@ -218,6 +222,9 @@ class FHIRManage(object):
             url = "/".join((self.baseURL, resToCall))
             if id:
                 url = "%s?id=%s" % (url, id)
+        elif self.baseURL == "https://simplifier.net/validate?scope=hl7.fhir.r4.core@4.0.1":
+            url = self.baseURL
+
         print("\n### URL ###: %s" % url)
 
         headers = {
@@ -301,7 +308,8 @@ def __init__(self):
     pass
 
 if __name__ == "__main__":
-    Update("Patient","2866353")
-    #Create("Specimen")
+
+    #Update("Patient","2866353")
+    Update("Specimen", "2873554")
     #Create("Practitioner")
     #Update("ServiceRequest", "9b79fd8c-2955-453f-8007-f8b1c7b9596d")
