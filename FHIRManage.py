@@ -310,6 +310,6 @@ def __init__(self):
 if __name__ == "__main__":
 
     #Update("Patient","2866353")
-    Update("Specimen", "2873554")
+    #Update("Specimen", "2873554")
     #Create("Practitioner")
-    #Update("ServiceRequest", "9b79fd8c-2955-453f-8007-f8b1c7b9596d")
+    Update("ServiceRequest", "9b79fd8c-2955-453f-8007-f8b1c7b9596d")
