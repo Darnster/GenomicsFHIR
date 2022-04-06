@@ -69,7 +69,8 @@ In the code the references are assigned to variables referenced from the diction
 ResourceDict = {"ServiceRequest" : "SRPayload",
                     "Patient" : "PatientPayload",
                     "Specimen" : "SpecimenPayload",
-                    "Practitioner" : "PractitionerPayload"}
+                    "Practitioner" : "PractitionerPayload",
+                    "ReqOrganization" : "ReqOrgPayload" }
 
 def Create(Resource):
     Fres = FHIRManage()
@@ -143,6 +144,8 @@ class FHIRManage(object):
         self.organization = self.configDict.setdefault("Organization",{})
         self.organization = self.openFile(self.organization)
 
+        self.requestOrganization = self.configDict.setdefault("RequestOrganization",{})
+        self.requestOrganization = self.openFile(self.requestOrganization)
 
         # get id/refs for dependent resources
         self.patientRef = self.configDict.setdefault("patientRef","")
@@ -156,6 +159,9 @@ class FHIRManage(object):
 
         self.manOrgRef = self.configDict.setdefault("manOrgRef", "")
         self.manOrgRef = eval(self.manOrgRef)
+
+        self.reqOrgRef = self.configDict.setdefault("reqOrgRef", "")
+        self.reqOrgRef = eval(self.reqOrgRef)
 
         # add other dependencies here
 
@@ -196,6 +202,10 @@ class FHIRManage(object):
             payload = config[1]
         elif resource == "ManageOrgPayload":
             config = self.ManageOrgPayload()
+            resToCall = config[0]
+            payload = config[1]
+        elif resource == "ReqOrgPayload":
+            config = self.ReqOrgPayload()
             resToCall = config[0]
             payload = config[1]
         elif resource == "PractitionerPayload":
@@ -252,6 +262,10 @@ class FHIRManage(object):
 
         return ["Organization", json.dumps(self.organization)]
 
+    def ReqOrgPayload(self):
+
+        return ["Organization", json.dumps(self.requestOrganization)]
+
     def SpecimenPayload(self):
 
         return ["Specimen", json.dumps(self.specimen)]
@@ -265,18 +279,28 @@ class FHIRManage(object):
                 "status": "generated",
                 "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: example-pgx</p><p><b>status</b>: active</p><p><b>intent</b>: original-order</p><p><b>code</b>: CYP2D6 gene targeted mutation analysis <span>(Details : {LOINC code '47403-1' = 'CYP2D6 gene mutation analysis in Blood or Tissue by Molecular genetics method Narrative', given as 'CYP2D6 gene targeted mutation analysis'})</span></p><p><b>subject</b>: <a>Patient/899962</a></p><p><b>authoredOn</b>: 10/10/2016 3:00:00 PM</p><p><b>requester</b>: <a>Practitioner/12345</a></p></div>"
             },
+            "identifier" : [
+                {
+                    "value": "45678"
+                },
+                {
+                "assigner" : self.reqOrgRef,
+                }
+            ],
+
             "status": "active",
             "priority": "routine",
             "intent": "original-order",
             "code": {
-                "coding": [
-                    {
-                        "system": "http://loinc.org",
-                        "code": "47403-1",
-                        "display": "CYP2D6 gene targeted mutation analysis"
-                    }
-                ]
-            },
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "76164006",
+                            "display": "Biopsy of colon (procedure)"
+                        }
+                    ],
+                    "text": "Biopsy of colon"
+                },
             # Patient
             "subject": self.patientRef,
             "authoredOn": "2022-03-30T15:00:00-07:00",
@@ -300,16 +324,10 @@ class FHIRGet(object):
         response = requests.request("GET", url, headers=headers)
         return response.text
 
-
-class FHIRUpdate(object):
-    pass
-
-def __init__(self):
-    pass
-
 if __name__ == "__main__":
 
     #Update("Patient","2866353")
     #Update("Specimen", "2873554")
     #Create("Practitioner")
-    Update("ServiceRequest", "9b79fd8c-2955-453f-8007-f8b1c7b9596d")
+    #Create("ReqOrganization")
+    Create("ServiceRequest")
