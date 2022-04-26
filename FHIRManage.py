@@ -19,7 +19,7 @@ ChangeLog:
 To Do:
 1. Add commandline parameters/args to allow the code to be run from the command line.  Currently the code is run by editing the __main__ method directly.
 2. Fix bug for GET request within RequestingOrganization Creation
-3. Simplify configuration for adding new FHIR resources - currently this requires a change in 3 places...
+3. Simplify configuration for adding new FHIR resources - currently this requires a change in 3 places....
  
 Guidance:
 This software has been created to build up a set of resource dependencies/references to support testing of complex pathology/genomics scenarios.
