@@ -4,12 +4,15 @@ What this code does:
 1. Creates and updates FHIR resources
 2. Returns the server id for each FHIR resource created or updated and logs it
 
-To Do:
+ChangeLog:
+06-04-2022 - added capability to support Create/Update of Requesting Organization
 
+To Do:
 1. Add commandline parameters/args to allow the code to be run from the command line.  Currently the code is run by editing the __main__ method directly.
+2. Fix bug for GET request within RequestingOrganization Creation
+3. Simplify configuration for adding new FHIR resources - currently this requires a change in 3 places....
  
 Guidance:
-
 This software has been created to build up a set of resource dependencies/references to support testing of complex pathology/genomics scenarios.
 Resources such as the pathology ServiceRequest include references to Patient, Specimen, Practitioner, etc which in return may have references to other Resources such as
 Organization and Location Resources, etc.
@@ -55,4 +58,4 @@ In the code the references are assigned to variables referenced from the diction
             "requester": self.practitionerRef,
             # Specimen
             "specimen": self.specimenRef
-        }...
+        }....
